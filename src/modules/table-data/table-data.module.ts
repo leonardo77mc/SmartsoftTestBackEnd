@@ -4,6 +4,10 @@ import { tableDataProvider } from "../../providers/table-data/table-data.provide
 import { TableDataTwoService } from "../../services/table-data/table-data-two.service";
 import { TableDataThreeService } from "../../services/table-data/table-data-three.service";
 
+/**
+ * Module that contains the array of custom providers of TableData One Entity,
+ * TableDataTwoEntity y TableDataThreeEntity.
+ */
 @Module({
   providers: [
     ...tableDataProvider,

@@ -10,17 +10,36 @@ export class TableDataTwoService {
   constructor(@Inject(Constantes.TABLE_DATA_TWO_REPOSITORY) private tableDataTwoRepository: Repository<TableDataTwoEntity>) {
   }
 
+  /**
+   * Method to save data in the tableData2.
+   * @param {dataTwoDto}
+   * @return {Promise}
+   */
   post(dataTwoDto: DataTwoDto): Promise<TableDataTwoEntity> {
     return this.tableDataTwoRepository.save(dataTwoDto);
   }
 
+  /**
+   * Method to update data in the tableData2.
+   * @param {dataTwoDto}
+   * @return {Promise}
+   */
   put(dataTwoDto: DataTwoDto): Promise<DataTwoDto> {
     return this.tableDataTwoRepository.manager.save(dataTwoDto);
   }
 
+  /**
+   * Method to get data in the tableData2.
+   * @return {Promise}
+   */
   get(): Promise<TableDataTwoEntity[]> {
     return this.tableDataTwoRepository.find();
   }
+
+  /**
+   * Method to delete data in the tableData2.
+   * @return {void}
+   */
   delete(tc: string): Promise<DeleteResult> {
     return this.tableDataTwoRepository
       .createQueryBuilder()

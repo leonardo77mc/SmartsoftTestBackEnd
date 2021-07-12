@@ -9,6 +9,8 @@ import { TableDataThreeEntity } from "../../repositories/table-data/table-data-t
 import { DataOneDto } from "../../validations/table-data/table-data-one.dto";
 import { DataTwoDto } from "../../validations/table-data/table-data-two.dto";
 import { DataThreeDto } from "../../validations/table-data/table-data.three.dto";
+import { IResponseGeneryInterface, IResponseTables } from "../../interfaces/response-genery.interface";
+import { AnswersEnum } from "../../utils/enums/answers.enum";
 
 @ResApiController("table-data")
 export class TableDataController {
@@ -20,28 +22,37 @@ export class TableDataController {
   ) {
   }
 
-  // Data table one.
+  /**
+   * Method to save data in the tableData1.
+   * @param {dataOneDto}
+   * @return {Promise}
+   */
   @Post("post-data-one")
-  async postDataOne(@Body() dataOneDto: DataOneDto) {
+  async postDataOne(@Body() dataOneDto: DataOneDto): Promise<IResponseGeneryInterface<TableDataOneEntity>> {
 
     let save = null;
-    let message = "";
+    let message = AnswersEnum.success;
 
     try {
       save = await this._tableDataServiceOne.post(dataOneDto);
     } catch (e) {
-      message = "Error los datos en la tabla";
-      console.error("Error to save data in the table:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_save_table, e.message);
     }
 
     return { data: save, message };
   }
 
+  /**
+   * Method to update data in the tableData1.
+   * @param dataOneDto
+   * @return {Promise}
+   */
   @Put("put-data-one")
-  async putDataOne(@Body() dataOneDto: DataOneDto) {
+  async putDataOne(@Body() dataOneDto: DataOneDto): Promise<IResponseGeneryInterface<DataOneDto>> {
 
     let update = null;
-    let message = "";
+    let message = AnswersEnum.success;
 
     const tableDataOne: TableDataOneEntity = new TableDataOneEntity();
     tableDataOne.T1C1 = dataOneDto.T1C1;
@@ -52,24 +63,37 @@ export class TableDataController {
     try {
       update = await this._tableDataServiceOne.put(tableDataOne);
     } catch (e) {
-      message = "Error al actualizar la tabla 1";
-      console.error("Error to update TableData1:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_update_table, e.message);
     }
 
     return { data: update, message };
   }
 
+
+  /**
+   * Method to get data in the tableData1.
+   * @return {Promise}
+   */
   @Get("get-data-one")
-  async getTableDataOne() {
+  async getTableDataOne(): Promise<IResponseTables<TableDataOneEntity>> {
+
     let data: TableDataOneEntity[] = [];
+    let message = AnswersEnum.success;
+
     try {
       data = await this._tableDataServiceOne.get();
     } catch (e) {
-      console.error("Error to query data in TableData 3:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_query_table_data, e.message);
     }
-    return data;
+    return { data, message };
   }
 
+  /**
+   * Method to delete data in the tableData1.
+   * @return {void}
+   */
   @Delete("delete-data-one")
   deleteTableDataOne() {
 
@@ -77,26 +101,37 @@ export class TableDataController {
 
   // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-  // Data table two.
+  /**
+   * Method to save data in the tableData2.
+   * @param {dataTwoDto}
+   * @return {Promise}
+   */
   @Post("post-data-two")
-  async postDataTwo(@Body() dataTwoDto: DataTwoDto) {
+  async postDataTwo(@Body() dataTwoDto: DataTwoDto): Promise<IResponseGeneryInterface<TableDataTwoEntity[]>> {
+
     let save = null;
-    let message = "";
+    let message = AnswersEnum.success;
 
     try {
       save = await this._tableDataServiceTwo.post(dataTwoDto);
     } catch (e) {
-      message = "Error los datos en la tabla";
-      console.error("Error to save data in the table:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_save_table, e.message);
     }
 
     return { data: save, message };
   }
 
+  /**
+   * Method to update data in the tableData2.
+   * @param {dataTwoDto}
+   * @return {Promise}
+   */
   @Put("put-data-two")
-  async putDataTwo(@Body() dataTwoDto: DataTwoDto) {
+  async putDataTwo(@Body() dataTwoDto: DataTwoDto): Promise<IResponseGeneryInterface<DataTwoDto>> {
+
     let update = null;
-    let message = "";
+    let message = AnswersEnum.success;
 
     const tableDataTwo: TableDataTwoEntity = new TableDataTwoEntity();
     tableDataTwo.T2C1 = dataTwoDto.T2C1;
@@ -108,24 +143,36 @@ export class TableDataController {
     try {
       update = await this._tableDataServiceTwo.put(tableDataTwo);
     } catch (e) {
-      message = "Error al actualizar la tabla 1";
-      console.error("Error to update TableData1:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_update_table, e.message);
     }
 
     return { data: update, message };
   }
 
+  /**
+   * Method to get data in the tableData2.
+   * @return {Promise}
+   */
   @Get("get-data-two")
-  async getTableDataTwo() {
+  async getTableDataTwo(): Promise<IResponseTables<TableDataTwoEntity>> {
+
     let data: TableDataTwoEntity[] = [];
+    let message = AnswersEnum.success;
+
     try {
       data = await this._tableDataServiceTwo.get();
     } catch (e) {
-      console.error("Error to query data in TableData 3:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_query_table_data, e.message);
     }
-    return data;
+    return { data, message };
   }
 
+  /**
+   * Method to delete data in the tableData2.
+   * @return {void}
+   */
   @Delete("delete-data-one")
   deleteTableDataTwo() {
 
@@ -133,25 +180,35 @@ export class TableDataController {
 
   //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-  // Data table three.
+  /**
+   * Method to save data in the tableData3.
+   * @param {dataThreeDto}
+   * @return {Promise}
+   */
   @Post("post-data-three")
-  async postDataThree(@Body() dataThreeDto: DataThreeDto) {
+  async postDataThree(@Body() dataThreeDto: DataThreeDto): Promise<IResponseGeneryInterface<TableDataThreeEntity[]>> {
 
     let save = null;
-    let message = "";
+    let message = AnswersEnum.success;
     try {
       save = await this._tableDataServiceThree.post(dataThreeDto);
     } catch (e) {
-      message = "Error los datos en la tabla";
-      console.error("Error to save data in the table:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_save_table, e.message);
     }
     return { data: save, message };
   }
 
+  /**
+   * Method to update data in the tableData3.
+   * @param {dataThreeDto}
+   * @return {Promise}
+   */
   @Put("put-data-three")
-  async putDataThree(@Body() dataThreeDto: DataThreeDto) {
+  async putDataThree(@Body() dataThreeDto: DataThreeDto): Promise<IResponseGeneryInterface<DataThreeDto>> {
+
     let update = null;
-    let message = "";
+    let message = AnswersEnum.success;
 
     const tableDataThree: TableDataThreeEntity = new TableDataThreeEntity();
     tableDataThree.T3C1 = dataThreeDto.T3C1;
@@ -161,24 +218,37 @@ export class TableDataController {
     try {
       update = await this._tableDataServiceThree.put(tableDataThree);
     } catch (e) {
-      message = "Error al actualizar la tabla 1";
-      console.error("Error to update TableData1:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_update_table, e.message);
     }
 
     return { data: update, message };
   }
 
+  /**
+   * Method to get data in the tableData3.
+   * @return {Promise}
+   */
   @Get("get-data-three")
-  async getTableDataThree() {
+  async getTableDataThree(): Promise<IResponseTables<TableDataThreeEntity>> {
+
     let data: TableDataThreeEntity[] = [];
+    let message = AnswersEnum.success;
+
     try {
       data = await this._tableDataServiceThree.get();
     } catch (e) {
-      console.error("Error to query data in TableData 3:", e.message);
+      message = AnswersEnum.error;
+      console.error(global.logYml.error_to_query_table_data, e.message);
     }
-    return data;
+    
+    return { data, message };
   }
 
+  /**
+   * Method to delete data in the tableData3.
+   * @return {void}
+   */
   @Delete("delete-data-one")
   deleteTableDataThree() {
 

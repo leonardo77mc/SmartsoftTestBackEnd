@@ -4,7 +4,16 @@ import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
 import * as compression from 'compression';
 import {AppModule} from './app.module';
+import { Yaml } from './class/yml/yml';
 import { ConfigService } from './config/environment/config.service';
+
+/**
+ * Method to load the configuration of global variables.
+ * @param {string} config
+ */
+const loadGlobal = function (config) {
+  global.logYml = Yaml.loadYml(`./${config.get('LOGYAML')}`);
+};
 
 async function bootstrap() {
 
@@ -33,6 +42,8 @@ async function bootstrap() {
 
   const swager = SwaggerModule.createDocument(app, document);
   SwaggerModule.setup('api', app, swager);
+
+  loadGlobal(config);
 
   await app.listen(config.get('PORT'), () => {
     console.log('Server run in port:', config.get('PORT'));

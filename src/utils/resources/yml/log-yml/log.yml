@@ -1,0 +1,6 @@
+error_to_query_tables: 'Error to query tables:'
+error_to_query_details_of_the_tables: 'Error to query detail of the tables:'
+error_load_config_environment: 'Error en la configuración de entorno'
+error_to_save_table: 'Error to save data in the table:'
+error_to_update_table: 'Error to update Table:'
+error_to_query_table_data: 'Error to query data of the TableData'

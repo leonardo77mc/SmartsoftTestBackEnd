@@ -4,6 +4,9 @@ import { TableDataOneEntity } from "../../repositories/table-data/table-data-one
 import { TableDataTwoEntity } from "../../repositories/table-data/table-data-two.entity";
 import { TableDataThreeEntity } from "../../repositories/table-data/table-data-three.entity";
 
+/**
+ * Array of custom providers for get repositories TableDataOneEntity, TableDataTwoEntity y TableDataThreeEntity.
+ */
 export const tableDataProvider = [
   {
     provide: Constantes.TABLE_DATA_ONE_REPOSITORY,

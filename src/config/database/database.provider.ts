@@ -5,19 +5,22 @@ import { TableStructureEntity } from "../../repositories/boards/table-structure.
 import { TableDataOneEntity } from "../../repositories/table-data/table-data-one.entity";
 import { TableDataTwoEntity } from "../../repositories/table-data/table-data-two.entity";
 import { TableDataThreeEntity } from "../../repositories/table-data/table-data-three.entity";
+import { ConfigService } from "../environment/config.service";
 
-
-
+/**
+ * Custom provider to configure the database.
+ */
 export const databaseProviders = [
   {
     provide: Constantes.CONECTION_DATABASE,
-    useFactory: async () => await createConnection({
+    inject: [ConfigService],
+    useFactory: async (config: ConfigService) => await createConnection({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
+      host: config.get('HOST'),
+      port: Number(config.get('PORT_DATABASE')),
+      username: config.get('USERNAME_DATABASE'),
       password: '',
-      database: 'smartsoft',
+      database: config.get('NAME_DATABASE'),
       entities: [
         // se importan las entidades de esta forma o con un archivo de configuración __dirname + '/../api/**/*.entity{.ts,.js'
         TableEntity,
